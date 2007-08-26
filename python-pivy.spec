@@ -60,4 +60,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui-soqt
 %{py_platsitedir}/pivy/gui/*qt*
-%{py_puresitedir}/Pivy*.egg-info
+%{py_platsitedir}/Pivy*.egg-info
