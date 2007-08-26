@@ -4,8 +4,8 @@
 Summary: A Python binding for Coin
 Name: python-%{module}
 Version: 0.4.0
-Release: %mkrel 0.20060526.2
-Source0: http://pivy.tammura.at/download/snapshots/pivy-latest.tar.bz2
+Release: %mkrel 0.20070826.1
+Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-latest.tar.gz
 License: BSD
 Group: Development/Python
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -37,7 +37,7 @@ applications.
 
 
 %prep
-%setup -n %{module}
+%setup -n Pivy
 
 %build
 python setup.py build
@@ -60,4 +60,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui-soqt
 %{py_platsitedir}/pivy/gui/*qt*
-
+%{py_puresitedir}/Pivy*.egg-info
