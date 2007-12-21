@@ -8,6 +8,7 @@ Release: %mkrel 0.20070826.1
 Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-latest.tar.gz
 License: BSD
 Group: Development/Python
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://pivy.tammura.at/
 BuildRequires: coin-devel >= 2.4
 BuildRequires: libsoqt-devel
