@@ -4,7 +4,7 @@
 Summary: A Python binding for Coin
 Name: python-%{module}
 Version: 0.4.0
-Release: %mkrel 0.20070826.2
+Release: %mkrel 0.20070826.3
 Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-latest.tar.gz
 License: BSD
 Group: Development/Python
