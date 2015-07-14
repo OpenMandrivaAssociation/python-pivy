@@ -13,7 +13,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://pivy.tammura.at/
 BuildRequires: coin-devel >= 2.4
 BuildRequires: libsoqt-devel
-BuildRequires: python-devel
+BuildRequires: pkgconfig(python2)
 BuildRequires: simvoleon-devel
 BuildRequires: swig
 
@@ -41,19 +41,19 @@ applications.
 %setup -n Pivy-%{version}-%{checkout}
 
 %build
-python setup.py build
+python2 setup.py build
 
 %install
-python setup.py install --skip-build --root=$RPM_BUILD_ROOT
+python2 setup.py install --skip-build --root=$RPM_BUILD_ROOT
 %if "%{_lib}" == "lib64"
 mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
 %endif
 
 %files
-%{py_platsitedir}/pivy
-%exclude %{py_platsitedir}/pivy/gui/*qt*
+%{py2_platsitedir}/pivy
+%exclude %{py2_platsitedir}/pivy/gui/*qt*
 %doc examples
 
 %files gui-soqt
-%{py_platsitedir}/pivy/gui/*qt*
-%{py_platsitedir}/Pivy*.egg-info
+%{py2_platsitedir}/pivy/gui/*qt*
+%{py2_platsitedir}/Pivy*.egg-info
