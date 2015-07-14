@@ -1,11 +1,12 @@
 
 %define module pivy
+%define checkout hg609
 
 Summary: A Python binding for Coin
 Name: python-%{module}
-Version: 0.4.0
-Release: %mkrel 0.20070826.3
-Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-latest.tar.gz
+Version: 0.5.0
+Release: 0.%{checkout}.1
+Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-%{version}-%checkout.tar.gz
 License: BSD
 Group: Development/Python
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -37,23 +38,18 @@ applications.
 
 
 %prep
-%setup -n Pivy
+%setup -n Pivy-%{version}-%{checkout}
 
 %build
 python setup.py build
 
 %install
-rm -rf $RPM_BUILD_ROOT
 python setup.py install --skip-build --root=$RPM_BUILD_ROOT
 %if "%{_lib}" == "lib64"
 mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
 %endif
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
-%defattr(-,root,root)
 %{py_platsitedir}/pivy
 %exclude %{py_platsitedir}/pivy/gui/*qt*
 %doc examples
