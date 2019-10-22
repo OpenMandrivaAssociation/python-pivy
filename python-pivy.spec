@@ -1,59 +1,72 @@
+%global alpha a3
 
-%define module pivy
-%define checkout hg609
+Name:           python-pivy
+Version:        0.6.5
+Release:        0.5%{?dist}
+Summary:        Python binding for Coin
 
-Summary: A Python binding for Coin
-Name: python-%{module}
-Version: 0.5.0
-Release: 0.%{checkout}.1
-Source0: http://pivy.coin3d.org/download/snapshot/releases/daily/Pivy-%{version}-%checkout.tar.gz
-License: BSD
-Group: Development/Python
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Url: http://pivy.tammura.at/
-BuildRequires: coin-devel >= 2.4
-BuildRequires: libsoqt-devel
-BuildRequires: pkgconfig(python2)
+License:        ISC
+URL:            https://github.com/FreeCAD/pivy
+
+# Move to FreeCAD fork as it is being supported.
+Source0:	https://github.com/FreeCAD/pivy/archive/%{version}%{alpha}.tar.gz
+
+Patch0:         pivy-cmake.patch
+Patch1:         pivy-setup_py.patch
+
+BuildRequires: coin4-devel >= 2.4
+BuildRequires: soqt-devel
+BuildRequires: pkgconfig(python)
+BuildRequires: pkgconfig(glu)
 BuildRequires: simvoleon-devel
 BuildRequires: swig
-
-%description
-Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
-library with a C++ Application Programming Interface. Coin uses
-scene-graph data structures to render real-time graphics suitable for
-mostly all kinds of scientific and engineering visualization
-applications.
+%{?python_provide:%python_provide python3-pivy}
 
 
-%package gui-soqt
-Summary: A Python binding for SoQt
-Group: Development/Python
+%global _description\
+Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
+a C++ Application Programming Interface. Coin uses scene-graph data structures\
+to render real-time graphics suitable for mostly all kinds of scientific and\
+engineering visualization applications.\
 
-%description gui-soqt
-Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
-library with a C++ Application Programming Interface. Coin uses
-scene-graph data structures to render real-time graphics suitable for
-mostly all kinds of scientific and engineering visualization
-applications.
+%description %_description
 
+%package examples
+Summary: Pivy example files
+
+%description examples
+%{summary}
 
 %prep
-%setup -n Pivy-%{version}-%{checkout}
+%autosetup -p1 -n pivy-%{version}%{alpha}
+
+# Examples in the docs folder should not be set executable.
+find ./docs -name "*.py" -exec chmod -x {} \;
+
 
 %build
-python2 setup.py build
+sed -i -e 's|QtInfo()|QtInfo(qmake_command=["qmake-qt5"])|g' setup.py
+export CFLAGS="%{optflags} -fpermissive"
+%py3_build
+
 
 %install
-python2 setup.py install --skip-build --root=$RPM_BUILD_ROOT
-%if "%{_lib}" == "lib64"
-mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
+%py3_install
+
+# Fix install location for x86_64 systems.
+%if %{_lib} == "lib64"
+mv %{buildroot}%{_prefix}/lib %{buildroot}%{_libdir}
 %endif
 
-%files
-%{py2_platsitedir}/pivy
-%exclude %{py2_platsitedir}/pivy/gui/*qt*
-%doc examples
+chmod +x %{buildroot}%{python3_sitearch}/pivy/sogui.py
 
-%files gui-soqt
-%{py2_platsitedir}/pivy/gui/*qt*
-%{py2_platsitedir}/Pivy*.egg-info
+find %{buildroot}%{python3_sitearch} -name "*.py" -exec sed -i "s|#!/usr/bin/env python|#!%{__python3}|" {} \;
+ 
+%files
+%license LICENSE
+%doc AUTHORS NEWS README.md THANKS docs/* HACKING
+%{python_sitearch}/pivy/
+%{python_sitearch}/*.egg-info
+
+%files examples
+%doc examples
