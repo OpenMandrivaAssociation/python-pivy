@@ -1,20 +1,20 @@
-%global alpha a3
+#global prerelease a3
 
 Name:           python-pivy
-Version:        0.6.5
-Release:        0.5%{?dist}
+Version:        0.6.6
+Release:        1
 Summary:        Python binding for Coin
 
 License:        ISC
 URL:            https://github.com/FreeCAD/pivy
 
 # Move to FreeCAD fork as it is being supported.
-Source0:	https://github.com/FreeCAD/pivy/archive/%{version}%{alpha}.tar.gz
+Source0:	https://github.com/FreeCAD/pivy/archive/%{version}%{?prerelease:%{prerelease}}.tar.gz
 
-Patch0:         pivy-cmake.patch
+#Patch0:         pivy-cmake.patch
 Patch1:         pivy-setup_py.patch
 
-BuildRequires: coin4-devel >= 2.4
+BuildRequires: coin-devel >= 2.4
 BuildRequires: soqt-devel
 BuildRequires: pkgconfig(python)
 BuildRequires: pkgconfig(glu)
@@ -38,35 +38,27 @@ Summary: Pivy example files
 %{summary}
 
 %prep
-%autosetup -p1 -n pivy-%{version}%{alpha}
+%autosetup -p1 -n pivy-%{version}%{?prerelease:%{prerelease}}
 
 # Examples in the docs folder should not be set executable.
 find ./docs -name "*.py" -exec chmod -x {} \;
 
+%cmake -G Ninja
 
 %build
-sed -i -e 's|QtInfo()|QtInfo(qmake_command=["qmake-qt5"])|g' setup.py
-export CFLAGS="%{optflags} -fpermissive"
-%py3_build
-
+%ninja_build -C build
 
 %install
-%py3_install
+%ninja_install -C build
 
-# Fix install location for x86_64 systems.
-%if %{_lib} == "lib64"
-mv %{buildroot}%{_prefix}/lib %{buildroot}%{_libdir}
+%if "%{_lib}" != "lib"
+mv %{buildroot}%{_prefix}/lib %{buildroot}%{_prefix}/%{_lib}
 %endif
-
-chmod +x %{buildroot}%{python3_sitearch}/pivy/sogui.py
-
-find %{buildroot}%{python3_sitearch} -name "*.py" -exec sed -i "s|#!/usr/bin/env python|#!%{__python3}|" {} \;
  
 %files
 %license LICENSE
 %doc AUTHORS NEWS README.md THANKS docs/* HACKING
-%{python_sitearch}/pivy/
-%{python_sitearch}/*.egg-info
+%{python_sitearch}/pivy
 
 %files examples
 %doc examples
