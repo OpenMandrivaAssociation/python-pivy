@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(glu)
 BuildRequires: simvoleon-devel
 BuildRequires: swig
 BuildRequires: cmake ninja
+BuildRequires: qt5-qtbase-devel
 %{?python_provide:%python_provide python3-pivy}
 
 
