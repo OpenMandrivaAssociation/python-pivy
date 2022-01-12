@@ -20,6 +20,7 @@ BuildRequires: pkgconfig(python)
 BuildRequires: pkgconfig(glu)
 BuildRequires: simvoleon-devel
 BuildRequires: swig
+BuildRequires: cmake ninja
 %{?python_provide:%python_provide python3-pivy}
 
 
