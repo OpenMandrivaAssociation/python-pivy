@@ -2,7 +2,7 @@
 
 Name:           python-pivy
 Version:        0.6.6
-Release:        1
+Release:        2
 Summary:        Python binding for Coin
 
 License:        ISC
