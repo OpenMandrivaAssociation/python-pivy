@@ -1,0 +1,12 @@
+Index: pivy-0.6.6/interfaces/CMakeLists.txt
+===================================================================
+--- pivy-0.6.6.orig/interfaces/CMakeLists.txt
++++ pivy-0.6.6/interfaces/CMakeLists.txt
+@@ -52,6 +52,7 @@ if (SoQt_FOUND)
+     set_property(SOURCE soqt.i PROPERTY INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}")
+     set_property(SOURCE soqt.i APPEND PROPERTY INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/fake_headers")
+     set_property(SOURCE soqt.i APPEND PROPERTY INCLUDE_DIRECTORIES "${SoQt_INCLUDE_DIRS}")
++    set_property(SOURCE soqt.i APPEND PROPERTY INCLUDE_DIRECTORIES "${Coin_INCLUDE_DIR}")
+ 
+ 
+     swig_add_library(soqt
