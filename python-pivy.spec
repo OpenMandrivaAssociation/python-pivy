@@ -1,15 +1,13 @@
-%global module pivy
-
 %{?python_enable_dependency_generator}
 
-Name:		python-%{module}
+Name:		python-pivy
 Version:	0.6.8
 Release:	1
 Summary:	Python binding for Coin
 License:	ISC
-URL:		https://github.com/FreeCAD/%{module}
+URL:		https://github.com/FreeCAD/pivy
 # Move to FreeCAD fork as it is being supported.
-Source0:	https://github.com/FreeCAD/%{module}/archive/%{version}/%{module}-%{version}.tar.gz
+Source0:	https://github.com/FreeCAD/pivy/archive/%{version}/pivy-%{version}.tar.gz
 # (fedora)
 Patch0:		pivy-cmake_config.patch
 
@@ -22,7 +20,7 @@ BuildRequires: simvoleon-devel
 BuildRequires: soqt-devel
 BuildRequires: swig
 
-Provides: python3dist(%{module})
+Provides: python3dist(pivy)
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
@@ -52,7 +50,7 @@ engineering visualization applications.
 #-----------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n %{module}-%{version}
+%autosetup -p1 -n pivy-%{version}
 
 # Examples in the docs folder should not be set executable.
 find ./docs -name "*.py" -exec chmod -x {} \;
