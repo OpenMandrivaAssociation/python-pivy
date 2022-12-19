@@ -3,7 +3,7 @@
 %{?python_enable_dependency_generator}
 
 Name:		python-%{module}
-Version:	0.6.7
+Version:	0.6.8
 Release:	1
 Summary:	Python binding for Coin
 License:	ISC
