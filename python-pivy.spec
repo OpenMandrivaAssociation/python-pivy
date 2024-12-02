@@ -1,26 +1,27 @@
 %{?python_enable_dependency_generator}
 
 Name:		python-pivy
-Version:	0.6.8
+Version:	0.6.9
 Release:	1
 Summary:	Python binding for Coin
 License:	ISC
-URL:		https://github.com/FreeCAD/pivy
-# Move to FreeCAD fork as it is being supported.
-Source0:	https://github.com/FreeCAD/pivy/archive/%{version}/pivy-%{version}.tar.gz
+URL:		https://github.com/coin3d/pivy
+Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.gz
 # (fedora)
-Patch0:		pivy-cmake_config.patch
+#Patch0:		pivy-cmake_config.patch
 
-BuildRequires: cmake ninja
-BuildRequires: coin-devel >= 2.4
-BuildRequires: pkgconfig(python)
-BuildRequires: pkgconfig(glu)
-BuildRequires: qt5-qtbase-devel
-BuildRequires: simvoleon-devel
-BuildRequires: soqt-devel
-BuildRequires: swig
+BuildRequires:	cmake ninja
+BuildRequires:	cmake(coin)
+BuildRequires:	cmake(Qt6Core)
+#BuildRequires:	cmake(simvoleon)
+BuildRequires:	cmake(pyside6)
+BuildRequires:	cmake(simage)
+BuildRequires:	cmake(soqt)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	swig
 
-Provides: python3dist(pivy)
+Provides: python%pyver}dist(pivy)
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
@@ -56,7 +57,12 @@ engineering visualization applications.
 find ./docs -name "*.py" -exec chmod -x {} \;
 
 %build
-%cmake -G Ninja
+LDFLAGS="%{build_ldflags} -lm" 
+export CC=gcc
+export CXX=g++
+
+%cmake -Wno-dev \
+	-G Ninja
 cd ..
 %ninja_build -C build
 
