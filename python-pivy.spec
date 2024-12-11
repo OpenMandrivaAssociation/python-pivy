@@ -2,13 +2,15 @@
 
 Name:		python-pivy
 Version:	0.6.9
-Release:	1
+Release:	2
 Summary:	Python binding for Coin
 License:	ISC
 URL:		https://github.com/coin3d/pivy
 Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.gz
 # (fedora)
 #Patch0:		pivy-cmake_config.patch
+
+Provides:	python%{pyver}dist(pivy)
 
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(coin)
@@ -21,8 +23,6 @@ BuildRequires:	cmake(soqt)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	swig
-
-Provides: python%pyver}dist(pivy)
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
