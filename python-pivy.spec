@@ -13,7 +13,6 @@ Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.g
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(coin)
 BuildRequires:	cmake(Qt6Core)
-BuildRequires:	cmake(Qt6Core5Compat)
 BuildRequires:	cmake(Qt6Quick)
 #BuildRequires:	cmake(simvoleon)
 BuildRequires:	cmake(pyside6)
@@ -64,6 +63,7 @@ export CC=gcc
 export CXX=g++
 
 %cmake -Wno-dev \
+	-DPIVY_USE_QT6:BOOL=ON \
 	-G Ninja
 cd ..
 %ninja_build -C build
