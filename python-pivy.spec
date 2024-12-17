@@ -1,5 +1,3 @@
-%{?python_enable_dependency_generator}
-
 Name:		python-pivy
 Version:	0.6.9
 Release:	2
@@ -7,11 +5,6 @@ Summary:	Python binding for Coin
 License:	ISC
 URL:		https://github.com/coin3d/pivy
 Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.gz
-# (fedora)
-#Patch0:		pivy-cmake_config.patch
-
-Provides:	python%{pyver}dist(pivy)
-
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(coin)
 BuildRequires:	cmake(Qt6Core)
@@ -21,8 +14,10 @@ BuildRequires:	cmake(pyside6)
 BuildRequires:	cmake(simage)
 BuildRequires:	cmake(soqt)
 BuildRequires:	pkgconfig(python)
+BuildRequires:  python%{pyver}dist(pip)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	swig
+
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
@@ -34,6 +29,7 @@ engineering visualization applications.
 %license LICENSE
 %doc AUTHORS NEWS README.md THANKS docs/* HACKING
 %{python_sitearch}/pivy
+%{py_platsitedir}/Pivy-*.*-info/
 
 #-----------------------------------------------------------------------------
 
@@ -58,10 +54,6 @@ engineering visualization applications.
 find ./docs -name "*.py" -exec chmod -x {} \;
 
 %build
-LDFLAGS="%{build_ldflags} -lm" 
-export CC=gcc
-export CXX=g++
-
 %cmake -Wno-dev \
 	-DPIVY_USE_QT6:BOOL=ON \
 	-G Ninja
@@ -70,4 +62,8 @@ cd ..
 
 %install
 %ninja_install -C build
+
+# egg-info
+%{py_install}
+mv -f %{buildroot}/%{py_puresitedir}/Pivy-*.*-info/ %{buildroot}/%{py_platsitedir}/
 
