@@ -1,10 +1,11 @@
 Name:		python-pivy
-Version:	0.6.9
-Release:	3
+Version:	0.6.10
+Release:	1
 Summary:	Python binding for Coin
 License:	ISC
 URL:		https://github.com/coin3d/pivy
 Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.gz
+
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(coin)
 BuildRequires:	cmake(Qt6Core)
@@ -13,9 +14,10 @@ BuildRequires:	cmake(Qt6Quick)
 BuildRequires:	cmake(pyside6)
 BuildRequires:	cmake(simage)
 BuildRequires:	cmake(soqt)
+BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(python)
 BuildRequires:  python%{pyver}dist(pip)
-BuildRequires:	pkgconfig(glu)
+BuildRequires:  python%{pyver}dist(setuptools)
 BuildRequires:	swig
 
 
@@ -29,7 +31,7 @@ engineering visualization applications.
 %license LICENSE
 %doc AUTHORS NEWS README.md THANKS docs/* HACKING
 %{python_sitearch}/pivy
-%{py_platsitedir}/Pivy-*.*-info/
+%{python_sitearch}/Pivy-*.*-info/
 
 #-----------------------------------------------------------------------------
 
@@ -57,8 +59,7 @@ find ./docs -name "*.py" -exec chmod -x {} \;
 %cmake -Wno-dev \
 	-DPIVY_USE_QT6:BOOL=ON \
 	-G Ninja
-cd ..
-%ninja_build -C build
+%ninja_build
 
 %install
 %ninja_install -C build
