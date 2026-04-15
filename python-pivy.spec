@@ -1,6 +1,6 @@
 Name:		python-pivy
-Version:	0.6.10
-Release:	2
+Version:	0.6.11
+Release:	1
 Summary:	Python binding for Coin
 License:	ISC
 URL:		https://github.com/coin3d/pivy
