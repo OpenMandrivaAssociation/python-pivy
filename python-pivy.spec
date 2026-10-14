@@ -16,7 +16,7 @@ BuildRequires:	cmake(pyside6)
 BuildRequires:	cmake(simage)
 BuildRequires:	cmake(soqt)
 BuildRequires:	pkgconfig(glu)
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:  python%{pyver}dist(pip)
 BuildRequires:  python%{pyver}dist(setuptools)
 BuildRequires:	swig
