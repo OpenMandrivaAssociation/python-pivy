@@ -6,6 +6,7 @@ License:	ISC
 Group:	Development/Python
 URL:		https://github.com/coin3d/pivy
 Source0:	https://github.com/coin3d/pivy/archive/%{version}/pivy-%{version}.tar.gz
+Patch0:		pivy-python315.patch
 
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(coin)
@@ -23,10 +24,11 @@ BuildRequires:	swig
 
 
 %description
-Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
-a C++ Application Programming Interface. Coin uses scene-graph data structures\
-to render real-time graphics suitable for mostly all kinds of scientific and\
-engineering visualization applications.
+Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
+library with a C++ Application Programming Interface. Coin uses
+scene-graph data structures to render real-time graphics suitable for
+mostly all kinds of scientific and engineering visualization
+applications.
 
 %files
 %license LICENSE
@@ -40,10 +42,11 @@ engineering visualization applications.
 Summary: Pivy example files
 
 %description examples
-Pivy is a Coin binding for Python. Coin is a high-level 3D graphics library with\
-a C++ Application Programming Interface. Coin uses scene-graph data structures\
-to render real-time graphics suitable for mostly all kinds of scientific and\
-engineering visualization applications.
+Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
+library with a C++ Application Programming Interface. Coin uses
+scene-graph data structures to render real-time graphics suitable for
+mostly all kinds of scientific and engineering visualization
+applications.
 
 %files examples
 %doc examples
